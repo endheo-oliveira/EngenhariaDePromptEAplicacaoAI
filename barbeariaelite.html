@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Barbearia clássica de luxo — cortes, barbas e experiências premium." />
+  <title>Dom Barbeiro — Barbearia de Luxo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ==========================================================================
+       CONFIGURAÇÕES GERAIS E VARIÁVEIS
+       ========================================================================== */
+    :root {
+      --primary: #c5a880; /* Dourado / Champagne */
+      --primary-dark: #a3875f;
+      --dark-bg: #0b0b0b;
+      --card-bg: #141414;
+      --text-light: #f5f5f5;
+      --text-muted: #a5a5a5;
+      --border-color: rgba(197, 168, 128, 0.2);
+      
+      --font-title: 'Cormorant Garamond', serif;
+      --font-body: 'Josefin Sans', sans-serif;
+      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    em {
+      font-family: var(--font-title);
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    /* Componentes Reutilizáveis */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .section-label span {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--primary);
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2, h3 {
+      font-family: var(--font-title);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      font-size: 3rem;
+      color: var(--text-light);
+    }
+
+    h3 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+    }
+
+    /* Botões */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--primary);
+      color: #000;
+      padding: 15px 35px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      border: 1px solid var(--primary);
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background-color: transparent;
+      color: var(--primary);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--text-light);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: #000;
+      background-color: var(--primary);
+    }
+
+    /* Efeito de Revelação (Scroll Animation) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background-color: rgba(11, 11, 11, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition);
+    }
+
+    header.scrolled {
+      padding: 10px 0;
+      background-color: var(--dark-bg);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 90px;
+    }
+
+    .logo {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 35px;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a.nav-cta {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      padding: 10px 22px;
+      color: var(--primary);
+    }
+
+    .nav-links a.nav-cta:hover {
+      background-color: var(--primary);
+      color: #000;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      width: 30px;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), 
+                  url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 20px;
+      margin-top: 60px;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      color: var(--primary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 25px;
+    }
+
+    .hero-eyebrow i {
+      font-size: 0.8rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-title);
+      font-size: 5rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 25px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+      40% { transform: translate(-50%, -10px); }
+      60% { transform: translate(-50%, -5px); }
+    }
+
+    /* ==========================================================================
+       SOBRE (ABOUT)
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      background-color: var(--card-bg);
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      background-color: var(--primary);
+      color: #000;
+      padding: 25px;
+      text-align: center;
+      border: 10px solid var(--dark-bg);
+    }
+
+    .about-badge strong {
+      display: block;
+      font-size: 2.5rem;
+      font-family: var(--font-title);
+      line-height: 1;
+    }
+
+    .about-badge span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .about-text h3 {
+      margin-bottom: 30px;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 40px;
+      margin: 40px 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 25px 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: var(--font-title);
+      font-size: 2.5rem;
+      color: var(--primary);
+      font-weight: 400;
+    }
+
+    .stat span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ==========================================================================
+       SERVIÇOS
+       ========================================================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 40px 30px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .service-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-10px);
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 25px;
+    }
+
+    .service-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
+
+    .service-price {
+      font-family: var(--font-title);
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .service-price small {
+      font-size: 1rem;
+    }
+
+    /* ==========================================================================
+       GALERIA
+       ========================================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(11, 11, 11, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       DEPOIMENTOS (TESTIMONIALS)
+       ========================================================================== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background-color: var(--card-bg);
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .stars {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+      color: var(--text-light);
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    .client-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .client-avatar {
+      width: 45px;
+      height: 45px;
+      background-color: var(--primary);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .client-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .client-since {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       CONTATO & MAPA
+       ========================================================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .contact-info h3 {
+      margin-bottom: 20px;
+    }
+
+    .contact-info > p {
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .contact-icon {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-top: 3px;
+    }
+
+    .contact-item strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .contact-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+    }
+
+    .social-link {
+      width: 45px;
+      height: 45px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+    }
+
+    .social-link:hover {
+      background-color: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      border: 1px solid var(--border-color);
+      filter: grayscale(1) invert(0.9) contrast(1.2);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    footer {
+      background-color: #070707;
+      padding: 60px 0 30px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .footer-logo {
+      font-family: var(--font-title);
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-divider {
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.05);
+      margin-bottom: 30px;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       WHATSAPP FLUTUANTE
+       ========================================================================== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25d366;
+      color: #fff;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      z-index: 99;
+      transition: var(--transition);
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      background-color: #20ba5a;
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES (RESPONSIVIDADE)
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero h1 { font-size: 3.5rem; }
+      .about-grid, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+      .about-image-wrap {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .about-badge { right: 0; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 70px 0; }
+      h2 { font-size: 2.3rem; }
+      
+      .hamburger { display: flex; }
+      
+      .nav-links {
+        position: fixed;
+        top: 90px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 90px);
+        background-color: var(--dark-bg);
+        flex-direction: column;
+        justify-content: center;
+        gap: 40px;
+        transition: 0.5s ease;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .hero h1 { font-size: 2.8rem; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .hero-actions .btn { width: 100%; max-width: 300px; justify-content: center; }
+      
+      .footer-links { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <div class="container">
+      <nav>
+        <a href="#hero" class="logo">Dom <em>Barbeiro</em></a>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#contato" class="nav-cta">Agendar</a></li>
+        </ul>
+
+        <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <i class="fa-solid fa-scissors"></i>
+        <span>Desde 2010 · Tradição & Estilo</span>
+        <i class="fa-solid fa-scissors"></i>
+      </div>
+
+      <h1>A Arte do<br /><em>Corte Perfeito</em></h1>
+      <p>Onde cada detalhe importa. Experiência premium em corte, barba e cuidados masculinos.</p>
+
+      <div class="hero-actions">
+        <a href="#contato" class="btn"><span>Agendar horário</span><i class="fa-regular fa-calendar"></i></a>
+        <a href="#servicos" class="btn btn-outline"><span>Ver serviços</span></a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <i class="fa-solid fa-chevron-down"></i>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-image-wrap reveal">
+          <img
+            src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"
+            alt="Barbeiro trabalhando"
+            loading="lazy"
+          />
+          <div class="about-badge">
+            <strong>+15</strong>
+            <span>Anos de tradição</span>
+          </div>
+        </div>
+
+        <div class="about-text reveal">
+          <div class="section-label"><span>Nossa História</span></div>
+          <h3>Tradição que vira<br />identidade</h3>
+
+          <p>Fundada em 2010, a Dom Barbeiro nasceu da paixão pelo artesanato da barbearia clássica. Aqui, cada cliente é recebido com atenção, respeito e a dedicação de quem leva o ofício a sério.</p>
+          <p>Nossos barbeiros são treinados nas técnicas mais refinadas — do corte americano clássico ao degradê contemporâneo — sempre com os melhores produtos do mercado.</p>
+
+          <div class="about-stats">
+            <div class="stat">
+              <strong data-target="3200" data-suffix="+">0+</strong>
+              <span>Clientes atendidos</span>
+            </div>
+            <div class="stat">
+              <strong data-target="15" data-suffix="+">0+</strong>
+              <span>Anos de tradição</span>
+            </div>
+            <div class="stat">
+              <strong data-target="8" data-suffix="">0</strong>
+              <span>Profissionais</span>
+            </div>
+          </div>
+
+          <a href="#servicos" class="btn"><span>Conheça nossos serviços</span><i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos">
+    <div class="container">
+      <div class="section-title">
+        <div class="section-label"><span>O Que Oferecemos</span></div>
+        <h2>Serviços Premium</h2>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="fa-solid fa-scissors"></i></div>
+          <h3>Corte Clássico</h3>
+          <p>Do degradê ao corte social, técnica e precisão em cada fio.</p>
+          <div class="service-price"><small>R$</small> 55</div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="fa-solid fa-face-smile"></i></div>
+          <h3>Barba</h3>
+          <p>Navalha quente, toalha e produtos premium para o acabamento perfeito.</p>
+          <div class="service-price"><small>R$</small> 40</div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <h3>Combo Completo</h3>
+          <p>Corte, barba e hidratação capilar em uma experiência única.</p>
+          <div class="service-price"><small>R$</small> 90</div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="fa-solid fa-droplet"></i></div>
+          <h3>Hidratação</h3>
+          <p>Tratamento profundo para cabelos ressecados e quebradiços.</p>
+          <div class="service-price"><small>R$</small> 45</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria">
+    <div class="container">
+      <div class="section-title">
+        <div class="section-label"><span>Nosso Trabalho</span></div>
+        <h2>Galeria</h2>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80" alt="Corte de cabelo" loading="lazy" />
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80" alt="Barba" loading="lazy" />
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=600&q=80" alt="Barbearia ambiente" loading="lazy" />
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1593702295094-11cb5d2e7ccf?auto=format&fit=crop&w=600&q=80" alt="Degradê" loading="lazy" />
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1599351431613-18ef1fdd27e2?auto=format&fit=crop&w=600&q=80" alt="Acabamento" loading="lazy" />
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="depoimentos">
+    <div class="container">
+      <div class="section-title">
+        <div class="section-label"><span>O Que Dizem</span></div>
+        <h2>Clientes Satisfeitos</h2>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card reveal">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p>"Melhor barbearia que já frequentei. Ambiente impecável, barbeiros atenciosos e o resultado do corte superou minhas expectativas."</p>
+          <div class="client-info">
+            <div class="client-avatar">R</div>
+            <div>
+              <div class="client-name">Ricardo Almeida</div>
+              <div class="client-since">Cliente desde 2019</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p>"Fiz o combo completo e saí de lá me sentindo uma nova pessoa. A toalha quente com navalha é simplesmente incrível. Recomendo a todos!"</p>
+          <div class="client-info">
+            <div class="client-avatar">M</div>
+            <div>
+              <div class="client-name">Marcos Ferreira</div>
+              <div class="client-since">Cliente desde 2021</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+          <p>"Ambiente sofisticado, atendimento de primeira. Eles se lembram do meu corte preferido mesmo meses depois. Isso é cuidado de verdade."</p>
+          <div class="client-info">
+            <div class="client-avatar">T</div>
+            <div>
+              <div class="client-name">Thiago Costa</div>
+              <div class="client-since">Cliente desde 2020</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="container">
+      <div class="section-title">
+        <div class="section-label"><span>Fale Conosco</span></div>
+        <h2>Localização & Contato</h2>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-info reveal">
+          <h3>Venha nos<br />visitar</h3>
+          <p>Estamos prontos para atendê-lo com excelência. Agende seu horário ou apareça diretamente.</p>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <strong>Endereço</strong>
+              <p>Rua das Palmeiras, 450<br />Centro — São Paulo, SP</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+            <div>
+              <strong>Horário</strong>
+              <p>Seg–Sex: 09h às 20h<br />Sáb: 08h às 18h</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <strong>Telefone</strong>
+              <p>(11) 9 9999-0000</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <strong>E-mail</strong>
+              <p>contato@dombarbeiro.com.br</p>
+            </div>
+          </div>
+
+          <div class="social-row">
+            <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" class="social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="map-container reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.2085!2d-46.654!3d-23.563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMzJzQ2LjgiUyA0NsKwMzknMTQuNCJX!5e0!3m2!1spt!2sbr!4v1680000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização Dom Barbeiro"
+          ></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <span class="footer-logo">Dom Barbeiro</span>
+
+      <nav class="footer-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <div class="footer-divider"></div>
+      <p>© 2025 Dom Barbeiro. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <a
+    href="https://wa.me/5511999990000"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Fale pelo WhatsApp"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // ==========================================
+      // MENU HAMBÚRGUER (MOBILE)
+      // ==========================================
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('nav-links');
+      const links = document.querySelectorAll('.nav-links a');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+
+      // Fecha o menu mobile ao clicar em um link
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+        });
+      });
+
+      // ==========================================
+      // HEADER FIXO NO SCROLL
+      // ==========================================
+      const header = document.getElementById('header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      // ==========================================
+      // ANIMAÇÃO DE REVELAÇÃO (SCROLL REVEAL)
+      // ==========================================
+      const revealElements = document.querySelectorAll('.reveal');
+      
+      const revealOnScroll = () => {
+        const triggerBottom = window.innerHeight * 0.85;
+
+        revealElements.forEach(el => {
+          const elTop = el.getBoundingClientRect().top;
+
+          if (elTop < triggerBottom) {
+            el.classList.add('active');
+          }
+        });
+      };
+
+      window.addEventListener('scroll', revealOnScroll);
+      revealOnScroll(); // Dispara uma vez no load inicial
+
+      // ==========================================
+      // CONTADORES NUMÉRICOS ANIMADOS (STATS)
+      // ==========================================
+      const stats = document.querySelectorAll('.stat strong');
+      let animatedStats = false;
+
+      const animateCounters = () => {
+        stats.forEach(stat => {
+          const target = parseInt(stat.getAttribute('data-target'), 10);
+          const suffix = stat.getAttribute('data-suffix') || '';
+          let count = 0;
+          const speed = target / 40; // Velocidade da animação
+
+          const updateCount = () => {
+            count += speed;
+            if (count < target) {
+              stat.innerText = Math.floor(count) + suffix;
+              setTimeout(updateCount, 25);
+            } else {
+              stat.innerText = target + suffix;
+            }
+          };
+
+          updateCount();
+        });
+      };
+
+      // Monitora scroll para rodar a animação dos números quando estiverem visíveis
+      const checkStatsVisibility = () => {
+        if (animatedStats) return;
+        const statsSection = document.querySelector('.about-stats');
+        if (!statsSection) return;
+
+        const rect = statsSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+          animateCounters();
+          animatedStats = true;
+        }
+      };
+
+      window.addEventListener('scroll', checkStatsVisibility);
+      checkStatsVisibility();
+    });
+  </script>
+</body>
+</html>
